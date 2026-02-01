@@ -97,8 +97,10 @@
                     <th>Heure Départ</th>
                     <th>Heure Arrivée</th>
                     <th>Train</th>
+                    <th>Action</th>
                 </tr>
                 </thead>
+
                 <tbody>
                 <tr th:each="horaire : ${horaires}">
                     <td th:text="${horaire.gareDepart?.nom_gare}"></td>
@@ -106,8 +108,20 @@
                     <td th:text="${horaire.heureDepart}"></td>
                     <td th:text="${horaire.heureArrivee}"></td>
                     <td th:text="${horaire.train?.matricule}"></td>
+
+                    <td>
+                        <a th:if="${depart != null and depart.id_gare != null
+                  and arrivee != null and arrivee.id_gare != null}"
+                           th:href="@{/user/reserver(horaireId=${horaire.id},
+                                    departId=${depart.id_gare},
+                                    arriveeId=${arrivee.id_gare})}">
+                            Réserver
+                        </a>
+                        <span th:if="${depart == null or arrivee == null}">Indisponible</span>
+                    </td>
                 </tr>
                 </tbody>
+
             </table>
         </div>
     </div>

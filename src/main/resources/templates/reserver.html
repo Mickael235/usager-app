@@ -1,0 +1,25 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><title>Réserver</title></head>
+<body>
+<h1>Réservation</h1>
+
+<form method="post" th:action="@{/ihm/reserver}">
+    <input type="hidden" name="horaireId" th:value="${horaireId}">
+    <input type="hidden" name="departId" th:value="${departId}">
+    <input type="hidden" name="arriveeId" th:value="${arriveeId}">
+
+    <label>Nom</label><br>
+    <input name="nom" required><br><br>
+
+    <label>Prénom</label><br>
+    <input name="prenom" required><br><br>
+
+    <label>Date naissance (YYYY-MM-DD)</label><br>
+    <input name="naissance" placeholder="2001-05-20" required><br><br>
+
+    <button type="submit">Valider la réservation</button>
+</form>
+
+</body>
+</html>

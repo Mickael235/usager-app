@@ -43,7 +43,21 @@ public class TrajetController {
 
         List<GareDTO> gares = gareClientService.getAllGares();
         model.addAttribute("gares", gares);
-        
+
+
+        GareDTO depart = gares.stream()
+                    .filter(g -> g.getNom_gare() != null && g.getNom_gare().equals(nomDepart))
+                    .findFirst()
+                    .orElse(null);
+
+        GareDTO arrivee = gares.stream()
+                    .filter(g -> g.getNom_gare() != null && g.getNom_gare().equals(nomArrivee))
+                    .findFirst()
+                    .orElse(null);
+
+            model.addAttribute("depart", depart);
+            model.addAttribute("arrivee", arrivee);
+
         return "rechercherTrajet";
     }
 }
