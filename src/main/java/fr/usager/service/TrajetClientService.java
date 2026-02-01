@@ -1,6 +1,6 @@
 package fr.usager.service;
 
-import fr.usager.dto.GareDTO;
+import fr.usager.dto.HoraireDTO;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
@@ -8,25 +8,20 @@ import org.springframework.web.client.RestClient;
 import java.util.List;
 
 @Service
-public class GareClientService {
+public class TrajetClientService {
+
     private final RestClient client = RestClient.builder()
             .baseUrl("http://localhost:9090")
             .build();
 
-    public GareDTO rechercherGare(String nom) {
+    public List<HoraireDTO> getSchedules(String nomDepart, String nomArrivee) {
         return client.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/gare/consulter")
-                        .queryParam("nom", nom)
+                        .path("/trajet/schedules")
+                        .queryParam("nomDepart", nomDepart)
+                        .queryParam("nomArrivee", nomArrivee)
                         .build())
                 .retrieve()
-                .body(GareDTO.class);
-    }
-
-    public List<GareDTO> getAllGares() {
-        return client.get()
-                .uri("/gare/all")
-                .retrieve()
-                .body(new ParameterizedTypeReference<List<GareDTO>>() {});
+                .body(new ParameterizedTypeReference<List<HoraireDTO>>() {});
     }
 }

@@ -1,11 +1,16 @@
 package fr.usager.dto;
 
-import java.util.List;
-
 public class TrainDTO {
-
+    private Integer idTrain;
     private String matricule;
-    private List<Object> wagons;
+
+    public Integer getIdTrain() {
+        return idTrain;
+    }
+
+    public void setIdTrain(Integer idTrain) {
+        this.idTrain = idTrain;
+    }
 
     public String getMatricule() {
         return matricule;
@@ -13,13 +18,5 @@ public class TrainDTO {
 
     public void setMatricule(String matricule) {
         this.matricule = matricule;
-    }
-
-    public List<Object> getWagons() {
-        return wagons;
-    }
-
-    public void setWagons(List<Object> wagons) {
-        this.wagons = wagons;
     }
 }

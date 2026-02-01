@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Rechercher un Trajet</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            margin: 2em;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+        }
+        .form-group {
+            margin-bottom: 1em;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5em;
+        }
+        select, input[type="text"] {
+            width: 100%;
+            padding: 0.5em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn {
+            padding: 0.5em 1em;
+            border: none;
+            border-radius: 4px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            margin-top: 1em;
+        }
+        .result {
+            margin-top: 2em;
+            padding: 1em;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1em;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Rechercher un Trajet</h1>
+
+    <form th:action="@{/user/trajet/results}" method="get">
+        <div class="form-group">
+            <label for="nomDepart">Gare de départ</label>
+            <select id="nomDepart" name="nomDepart">
+                <option th:each="gare : ${gares}"
+                        th:value="${gare.nom_gare}"
+                        th:text="${gare.nom_gare}"
+                        th:selected="${gare.nom_gare == nomDepart}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="nomArrivee">Gare d'arrivée</label>
+            <select id="nomArrivee" name="nomArrivee">
+                <option th:each="gare : ${gares}"
+                        th:value="${gare.nom_gare}"
+                        th:text="${gare.nom_gare}"
+                        th:selected="${gare.nom_gare == nomArrivee}">
+                </option>
+            </select>
+        </div>
+        <button type="submit" class="btn">Rechercher les horaires</button>
+    </form>
+
+    <div th:if="${horaires != null}">
+        <div th:if="${horaires.isEmpty()}" class="result">
+            <h2 th:text="'Aucun horaire trouvé pour le trajet ' + ${nomDepart} + ' -> ' + ${nomArrivee} + '.'"></h2>
+        </div>
+        <div th:if="${!horaires.isEmpty()}" class="result">
+            <h2 th:text="'Horaires pour le trajet ' + ${nomDepart} + ' -> ' + ${nomArrivee} + ':'"></h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Gare Départ</th>
+                    <th>Gare Arrivée</th>
+                    <th>Heure Départ</th>
+                    <th>Heure Arrivée</th>
+                    <th>Train</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="horaire : ${horaires}">
+                    <td th:text="${horaire.gareDepart?.nom_gare}"></td>
+                    <td th:text="${horaire.gareArrivee?.nom_gare}"></td>
+                    <td th:text="${horaire.heureDepart}"></td>
+                    <td th:text="${horaire.heureArrivee}"></td>
+                    <td th:text="${horaire.train?.matricule}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>
