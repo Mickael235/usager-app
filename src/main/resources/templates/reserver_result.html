@@ -1,0 +1,12 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><title>Résultat</title></head>
+<body>
+<h1>Résultat</h1>
+
+<p th:if="${msg}" th:text="${msg}"></p>
+<p th:if="${err}" th:text="${err}" style="color:red"></p>
+
+<a href="/ihm">Retour</a>
+</body>
+</html>
